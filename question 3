@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool balanced(const string &s){
+    stack<char> st;
+    unordered_map<char,char> mp={{')','('},{']','['},{'}','{'}};
+    for(char c:s){
+        if(c=='('||c=='['||c=='{') st.push(c);
+        else if(mp.count(c)){
+            if(st.empty() || st.top()!=mp[c]) return false;
+            st.pop();
+        }
+    }
+    return st.empty();
+}
+
+int main(){
+    string s1="(a+b)*(c-d)";
+    string s2="(a+b]*c";
+    cout<<s1<<" -> "<<(balanced(s1)?"Balanced":"Not Balanced")<<"\n";
+    cout<<s2<<" -> "<<(balanced(s2)?"Balanced":"Not Balanced")<<"\n";
+}
+/*(a+b)*(c-d) -> Balanced
+(a+b]*c -> Not Balanced
+*/
