@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+long long apply(long long a,long long b,char op){
+    switch(op){
+        case '+': return a+b;
+        case '-': return a-b;
+        case '*': return a*b;
+        case '/': return b? a/b:0;
+        case '^': return (long long)pow((long double)a,(long double)b);
+    }
+    return 0;
+}
+
+int main(){
+    string line="12 3 4 * + 2 /"; // corresponds to (12 + 3*4) / 2
+    stringstream ss(line); string tok;
+    stack<long long> st;
+    while(ss>>tok){
+        if(tok.size()==1 && string("+-*/^").find(tok[0])!=string::npos){
+            long long b=st.top(); st.pop();
+            long long a=st.top(); st.pop();
+            st.push(apply(a,b,tok[0]));
+        }else st.push(stoll(tok));
+    }
+    cout<<"Expression: "<<line<<"\n";
+    cout<<"Result: "<<st.top()<<"\n";
+}
+/* output - 
+Expression: 12 3 4 * + 2 /
+Result: 12
+*/
